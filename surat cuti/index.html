@@ -106,10 +106,10 @@
             <section id="tab-rekod" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-300 space-y-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row gap-4 items-center justify-between">
                     <div>
-                        <h2 class="text-lg font-bold text-slate-800">Carian Pangkalan Rekod Cuti</h2>
-                        <p class="text-xs text-slate-500 mt-1">Sistem Keselamatan: Anda hanya dapat melihat senarai rekod permohonan anda sendiri melainkan anda ialah Pentadbir.</p>
+                        <h2 id="rekod-title" class="text-lg font-bold text-slate-800">Carian Pangkalan Rekod Cuti</h2>
+                        <p id="rekod-subtitle" class="text-xs text-slate-500 mt-1">Sistem Keselamatan: Anda hanya dapat melihat senarai rekod permohonan anda sendiri melainkan anda ialah Pentadbir.</p>
                     </div>
-                    <div class="relative w-full md:w-72">
+                    <div id="carian-container" class="relative w-full md:w-72">
                         <input type="text" id="carian-nama" placeholder="Taip nama untuk menapis..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </div>
@@ -550,6 +550,17 @@
                 activeUserIC = inputIC;
                 const userJawatan = (activeUser.jawatan || '').toLowerCase();
                 isPentadbir = userJawatan.includes('guru besar') || userJawatan.includes('penolong kanan') || userJawatan.includes('gpk') || userJawatan.includes('pk pentadbiran') || userJawatan.includes('pk hem') || userJawatan.includes('pk kokurikulum');
+                
+                if (isPentadbir) {
+                    document.getElementById('rekod-title').textContent = "Pangkalan Rekod (Akses Pentadbir)";
+                    document.getElementById('rekod-subtitle').textContent = "Anda boleh melihat dan menapis rekod semua staf.";
+                    document.getElementById('carian-container').classList.remove('hidden');
+                } else {
+                    document.getElementById('rekod-title').textContent = "Rekod Permohonan Anda";
+                    document.getElementById('rekod-subtitle').textContent = "Berikut merupakan senarai permohonan yang pernah anda hantar.";
+                    document.getElementById('carian-container').classList.add('hidden');
+                    document.getElementById('carian-nama').value = '';
+                }
                 
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-screen').classList.remove('hidden');
